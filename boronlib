@@ -1,0 +1,558 @@
+--services
+local players = game:GetService("Players")
+local tweenService = game:GetService("TweenService")
+local runser = game:GetService("RunService")
+local core = game:GetService("CoreGui")
+local uis = game:GetService("UserInputService")
+
+--variables
+local lp = players.LocalPlayer
+local mouse = lp:GetMouse()
+local camera = workspace.CurrentCamera
+local viewport = camera.ViewportSize
+local tweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut)
+
+local Library = {}
+
+colorm = Color3.fromRGB(30,30,30)
+colorse = Color3.fromRGB(50,50,50)
+colorse2 = Color3.fromRGB(65, 65, 65)
+colorse3 = Color3.fromRGB(45, 45 ,45)
+colorse4 = Color3.fromRGB(55, 55, 55)
+dblue = Color3.fromRGB(0,0, 127)
+lblue = Color3.fromRGB(0, 85, 255)
+colorw = Color3.fromRGB(255, 255, 255)
+colorw2 = Color3.fromRGB(200, 200, 200)
+
+function Library:validate(defaults, options)
+	local options = options or {}
+		for i, v in pairs(defaults) do
+		if options[i] == nil then
+			options[i] = v
+		end
+	end
+	return options
+end
+
+function Library:tween(object, goal, callback)
+	local tween = tweenService:Create(object, tweenInfo, goal)
+	tween.Completed:Connect(callback or function() end)
+	tween:Play()
+end
+
+function Library:new(options)	
+	options = Library:validate({
+		name = "Boron Library";
+		mainsizex = "400";
+		mainsizey = "400";
+	} ,options or {})
+	
+	local GUI = {
+		CurrentTab = nil;
+	}
+	
+	do --Main Frame
+		GUI["1"] = Instance.new("ScreenGui", runser:IsStudio() and players.LocalPlayer:WaitForChild("PlayerGui") or core);
+		GUI["1"]["Name"] = [[BoronLibrary]];
+		GUI["1"]["IgnoreGuiInset"] = true
+		
+		GUI["2"] = Instance.new("Frame", GUI["1"]);
+		GUI["2"]["BorderSizePixel"] = 2;
+		GUI["2"]["BackgroundColor3"] = Color3.fromRGB(colorse);
+		GUI["2"]["Size"] = UDim2.new(0, options.mainsizex, 0, options.mainsizey);
+		GUI["2"]["BorderColor3"] = Color3.fromRGB(dblue);
+		GUI["2"]["Position"] = UDim2.fromOffset((viewport.X/2) - (GUI["2"].Size.X.Offset / 2), (viewport.Y/2) - (GUI["2"].Size.Y.Offset / 2));
+		GUI["2"]["Name"] = [[Main]];
+		GUI["2"]["Draggable"] = true
+		
+		GUI["6"] = Instance.new("Frame", GUI["2"]);
+		GUI["6"]["BorderSizePixel"] = 2;
+		GUI["6"]["BackgroundColor3"] = Color3.fromRGB(colorm);
+		GUI["6"]["Size"] = UDim2.new(0, options.mainsizex - 20, 0, options.mainsizey - 35);
+		GUI["6"]["BorderColor3"] = Color3.fromRGB(colorse2);
+		GUI["6"]["Position"] = UDim2.new(0.025, 0, 0.063, 0)
+		GUI["6"]["Name"] = [[Inner]];
+		GUI["6"]["Draggable"] = true
+		
+		GUI["7"] = Instance.new("Frame", GUI["6"]);
+		GUI["7"]["BorderSizePixel"] = 2;
+		GUI["7"]["BackgroundColor3"] = Color3.fromRGB(colorse);
+		GUI["7"]["Size"] = UDim2.new(0, options.mainsizex - 40, 0, options.mainsizey - 55);
+		GUI["7"]["BorderColor3"] = Color3.fromRGB(65, 65, 65);
+		GUI["7"]["Position"] = UDim2.new(0.02631578966975212, 0, -0.06849315017461777, 35);
+		GUI["7"]["Name"] = [[MainInner]];
+		GUI["7"]["Draggable"] = true
+	end
+	
+	do --Text
+		GUI["3"] = Instance.new("TextLabel", GUI["2"]);
+		GUI["3"]["TextWrapped"] = true;
+		GUI["3"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+		GUI["3"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+		GUI["3"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+		GUI["3"]["TextSize"] = 20;
+		GUI["3"]["TextColor3"] = Color3.fromRGB(colorw);
+		GUI["3"]["Size"] = UDim2.new(0, 400, 0, 20);
+		GUI["3"]["Text"] = options["name"];
+		GUI["3"]["Name"] = [[Text]];
+		GUI["3"]["BackgroundTransparency"] = 1;
+		
+		GUI["4"] = Instance.new("UIPadding", GUI["3"]);
+		GUI["4"]["PaddingTop"] = UDim.new(0, 6);
+		GUI["4"]["PaddingLeft"] = UDim.new(0, 6);
+	end
+	
+	do --Navigation
+		GUI["8"] = Instance.new("Frame", GUI["7"]);
+		GUI["8"]["BorderSizePixel"] = 0;
+		GUI["8"]["BackgroundColor3"] = Color3.fromRGB(colorse);
+		GUI["8"]["BackgroundTransparency"] = 1;
+		GUI["8"]["Size"] = UDim2.new(0, options.mainsizex - 40, 0, 25);
+		GUI["8"]["Name"] = [[Navigation]];
+		
+		GUI["b"] = Instance.new("UIListLayout", GUI["8"]);
+		GUI["b"]["FillDirection"] = Enum.FillDirection.Horizontal;
+		GUI["b"]["Padding"] = UDim.new(0, 20);
+		GUI["b"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
+
+	end
+	
+	function GUI:CreateTab(options)
+		options = Library:validate({
+			name = "Preview Tab";
+		} ,options or {})
+		
+		local Tab = {
+			Hover = false;
+			Active = false;
+		}
+		
+		--Render
+		do
+			Tab["9"] = Instance.new("Frame", GUI["8"]);
+			Tab["9"]["BorderSizePixel"] = 2;
+			Tab["9"]["BackgroundColor3"] = Color3.fromRGB(colorm);
+			Tab["9"]["Size"] = UDim2.new(0, 75, 0, 25);
+			Tab["9"]["BorderColor3"] = Color3.fromRGB(colorse2);
+			Tab["9"]["Name"] = options.name.."TabButton";
+
+			Tab["a"] = Instance.new("TextLabel", Tab["9"]);
+			Tab["a"]["TextWrapped"] = true;
+			Tab["a"]["BorderSizePixel"] = 0;
+			Tab["a"]["TextScaled"] = true;
+			Tab["a"]["BackgroundColor3"] = Color3.fromRGB(colorm);
+			Tab["a"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+			Tab["a"]["TextSize"] = 18;
+			Tab["a"]["TextColor3"] = Color3.fromRGB(200, 200, 200);
+			Tab["a"]["Size"] = UDim2.new(0, 75 - 5, 0, 25 - 5);
+			Tab["a"]["Text"] = options.name;
+			Tab["a"]["Name"] = [[Text]];
+			Tab["a"]["Position"] = UDim2.new(0.02666666731238365, 0, 0.07999999821186066, 0);
+
+			Tab["12"] = Instance.new("Frame", GUI["7"]);
+			Tab["12"]["BorderSizePixel"] = 0;
+			Tab["12"]["BackgroundColor3"] = Color3.fromRGB(colorse3);
+			Tab["12"]["Size"] = UDim2.new(0, 357, 0, 315);
+			Tab["12"]["BorderColor3"] = Color3.fromRGB(65, 65, 65)
+			Tab["12"]["Position"] = UDim2.new(0.0055555556900799274, 0, -0.03776855394244194, 35);
+			Tab["12"]["Name"] = options.name.."Tab";
+		end
+		
+		--Functions
+		function Tab:Activate()
+			if Tab.Active == false then
+				if GUI.CurrentTab ~= nil then
+					GUI.CurrentTab:Deactivate()
+				end
+				
+				Tab.Active = true
+				Library:tween(Tab["a"], {TextColor3 = Color3.fromRGB(colorw)})
+				Library:tween(Tab["a"], {BackgroundColor3 = Color3.fromRGB(colorse3)})
+				Tab["12"].Visible = true
+				
+				GUI.CurrentTab = Tab
+			end
+		end
+		
+		function Tab:Deactivate()
+			if Tab.Active then
+				Tab.Active = false
+				Tab.Hover = false
+				
+				Library:tween(Tab["a"], {TextColor3 = Color3.fromRGB(colorw2)})
+				Library:tween(Tab["a"], {BackgroundColor3 = Color3.fromRGB(colorm)})
+				Tab["12"].Visible = false
+				 
+			end
+		end
+		
+		--Handling
+		do
+			Tab["9"].MouseEnter:Connect(function()
+				Tab.Hover = true
+
+				if not Tab.Active then
+					Library:tween(Tab["a"], {TextColor3 = Color3.fromRGB(colorw)})
+				end
+			end)
+
+			Tab["9"].MouseLeave:Connect(function()
+				Tab.Hover = false
+
+				if not Tab.Active then
+					Library:tween(Tab["a"], {TextColor3 = Color3.fromRGB(colorw2)})
+				end
+			end)
+
+			uis.InputBegan:Connect(function(input, gpe)
+				if gpe then return end
+
+
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					if Tab.Hover == true then
+						Tab:Activate()
+					end
+				end
+			end)
+
+			if GUI.CurrentTab == nil then
+				Tab:Activate()
+			end
+		end
+		
+		local GroupBox = {}
+		
+		function Tab:GroupBox(options)
+			options = Library:validate({
+				name = "Groupbox";
+				posx = "5";
+				posy = "10";
+				sizex = "170";
+				sizey = "300";
+			} ,options or {})
+			
+			--Render
+			do
+				GroupBox["13"] = Instance.new("ScrollingFrame", Tab["12"]);
+				GroupBox["13"]["BorderSizePixel"] = 2;
+				GroupBox["13"]["BackgroundColor3"] = Color3.fromRGB(colorm);
+				GroupBox["13"]["Size"] = UDim2.new(0, options.sizex, 0, options.sizey);
+				GroupBox["13"]["BorderColor3"] = Color3.fromRGB(colorse2);
+				GroupBox["13"]["Position"] = UDim2.new(0, options.posx, 0, options.posy);
+				GroupBox["13"]["Name"] = options.name.."Groupbox";
+				GroupBox["13"]["ZIndex"] = 2;
+				GroupBox["13"]["ScrollBarThickness"] = 0;
+				
+				GroupBox["20"] = Instance.new("TextLabel", GroupBox["13"]);
+				GroupBox["20"]["TextWrapped"] = true;
+				GroupBox["20"]["TextScaled"] = true;
+				GroupBox["20"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+				GroupBox["20"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+				GroupBox["20"]["TextSize"] = 14;
+				GroupBox["20"]["TextColor3"] = Color3.fromRGB(colorw);
+				GroupBox["20"]["Size"] = UDim2.new(0, options.sizex - 20, 0, 25);
+				GroupBox["20"]["Text"] = options.name;
+				GroupBox["20"]["Name"] = [[Name]];
+				GroupBox["20"]["BackgroundTransparency"] = 1;
+				GroupBox["20"]["ZIndex"] = 2;	
+			end
+			
+			local gsizex = options.sizex
+			local gsizey = options.sizey
+			
+			function GroupBox:Button(options)
+				options = Library:validate({
+					name = "New Button";
+					posx = "10";
+					posy = "25";
+					sizex = "150";
+					sizey = "25";
+					callback = function() end
+				} ,options or {})
+
+				local Button = {
+					Hover = false;
+					MouseDown = false;
+				}
+
+				--Render
+				do
+					Button["14"] = Instance.new("Frame", GroupBox["13"]);
+					Button["14"]["BorderSizePixel"] = 2;
+					Button["14"]["BackgroundColor3"] = Color3.fromRGB(colorm);
+					Button["14"]["Size"] = UDim2.new(0, gsizex - 20, 0, 25);
+					Button["14"]["BorderColor3"] = Color3.fromRGB(colorse2);
+					Button["14"]["Position"] = UDim2.new(0, options.posx, 0, options.posy);
+					Button["14"]["Name"] = [[Button]];
+					Button["14"]["ZIndex"] = 2
+
+					Button["15"] = Instance.new("TextLabel", Button["14"]);
+					Button["15"]["TextWrapped"] = true;
+					Button["15"]["TextScaled"] = true;
+					Button["15"]["BackgroundColor3"] = Color3.fromRGB(colorm);
+					Button["15"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+					Button["15"]["TextSize"] = 25;
+					Button["15"]["TextColor3"] = Color3.fromRGB(colorw);
+					Button["15"]["Size"] = UDim2.new(0, gsizex - 20, 0, 25);
+					Button["15"]["BorderColor3"] = Color3.fromRGB(colorse2);
+					Button["15"]["BorderSizePixel"] = 0
+					Button["15"]["Text"] = options.name;
+					Button["15"]["Name"] = [[Text]];
+					Button["15"]["BackgroundTransparency"] = 0;
+					Button["15"]["ZIndex"] = 2
+				end
+
+				--Logic
+				do
+					Button["15"].MouseEnter:Connect(function()
+						Button.Hover = true
+						Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(colorse3)})
+					end)
+
+					Button["15"].MouseLeave:Connect(function()
+						Button.Hover = false
+						if not Button.MouseDown then
+							Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(colorm)})
+						end
+					end)
+
+					uis.InputBegan:Connect(function(input, gpe)
+						if gpe then return end
+
+						if input.UserInputType == Enum.UserInputType.MouseButton1 and Button.Hover then
+							Button.MouseDown = true
+							Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(colorm)})
+							options.callback()
+						end
+					end)
+
+					uis.InputEnded:Connect(function(input, gpe)
+						if gpe then return end
+
+						if input.UserInputType == Enum.UserInputType.MouseButton1 then
+							Button.MouseDown = false
+							if Button.Hover then
+								Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(colorse3)})
+							else
+								Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(colorm)})
+							end
+						end
+					end)
+				end
+
+				--Methods
+				function Button:SetText(text)
+					Button["15"].Text = text
+				end
+
+				function Button:SetCallback(fn)
+					options.callback = fn
+				end
+
+				return Button
+			end
+			
+			function GroupBox:Label(options)
+				options = Library:validate({
+					text = "New Label";
+					posy = "55";
+					paddingval = 10;
+					callback = function() end
+				} ,options or {})
+				
+				local Label = {}
+				
+				
+				--Render
+				do
+					Label["22"] = Instance.new("TextLabel", GroupBox["13"]);
+					Label["22"]["TextWrapped"] = true;
+					Label["22"]["TextScaled"] = true;
+					Label["22"]["BackgroundColor3"] = Color3.fromRGB(colorw);
+					Label["22"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+					Label["22"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+					Label["22"]["TextSize"] = 14;
+					Label["22"]["TextColor3"] = Color3.fromRGB(colorw);
+					Label["22"]["Size"] = UDim2.new(0, gsizex - 20, 0, 20);
+					Label["22"]["Text"] = options.text;
+					Label["22"]["Name"] = [[Label]];
+					Label["22"]["BackgroundTransparency"] = 1;
+					Label["22"]["Position"] = UDim2.new(0,0, 0, options.posy);
+					Label["22"]["ZIndex"] = 2
+					
+					Label["22"] = Instance.new("UIPadding", Label["22"]);
+					Label["22"]["PaddingLeft"] = UDim.new(0, options.paddingval);
+				end
+				
+				--Methods
+				function Label:SetText(text)
+					Label["22"]["Text"] = text
+				end
+				
+				return Label
+			end
+			
+			function GroupBox:Slider(options)
+				options = Library:validate({
+					name = "new sliduh";
+					posx = "10";
+					posy = "95";
+					sizex = "150";
+					sizey = "25";
+					paddingval = "-2";
+					
+					min = 0;
+					max = 100;
+					default = 50;
+					
+					Options = options;
+					
+					callback = function(v) print(v) end
+				} ,options or {})
+				
+				local Slider = {
+					Hover = false;
+					MouseDown = false;
+					Connection = nil;
+				}
+				
+				
+				--Render
+				
+				do
+					Slider["1b"] = Instance.new("Frame", GroupBox["13"]);
+					Slider["1b"]["BorderSizePixel"] = 2;
+					Slider["1b"]["BackgroundColor3"] = Color3.fromRGB(colorm);
+					Slider["1b"]["Size"] = UDim2.new(0, gsizex - 20, 0, 20);
+					Slider["1b"]["BorderColor3"] = Color3.fromRGB(colorse4);
+					Slider["1b"]["Position"] = UDim2.new(0, options.posx, 0, options.posy);
+					Slider["1b"]["Name"] = [[Slider]];
+					Slider["1b"]["ZIndex"] = 2;
+
+					Slider["1c"] = Instance.new("Frame", Slider["1b"]);
+					Slider["1c"]["BorderSizePixel"] = 0;
+					Slider["1c"]["BackgroundColor3"] = Color3.fromRGB(dblue);
+					Slider["1c"]["Size"] = UDim2.new(0, gsizex - 95, 0, 20);
+					Slider["1c"]["BorderColor3"] = Color3.fromRGB(colorse4);
+					Slider["1c"]["Name"] = [[Draggable]];
+					Slider["1c"]["ZIndex"] = 2;
+
+					Slider["1d"] = Instance.new("TextLabel", Slider["1c"]);
+					Slider["1d"]["TextWrapped"] = true;
+					Slider["1d"]["TextScaled"] = true;
+					Slider["1d"]["BackgroundColor3"] = Color3.fromRGB(dblue);
+					Slider["1d"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+					Slider["1d"]["TextSize"] = 14;
+					Slider["1d"]["TextColor3"] = Color3.fromRGB(colorw2);
+					Slider["1d"]["Size"] = UDim2.new(0, gsizex - 20, 0, 20);
+					Slider["1d"]["Text"] = tostring(options.default);
+					Slider["1d"]["Name"] = [[Text]];
+					Slider["1d"]["BackgroundTransparency"] = 1;
+					Slider["1d"]["ZIndex"] = 2
+
+					Slider["1e"] = Instance.new("TextLabel", Slider["1b"]);
+					Slider["1e"]["TextWrapped"] = true;
+					Slider["1e"]["TextScaled"] = true;
+					Slider["1e"]["BackgroundColor3"] = Color3.fromRGB(colorw);
+					Slider["1e"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+					Slider["1e"]["TextSize"] = 14;
+					Slider["1e"]["TextColor3"] = Color3.fromRGB(colorw);
+					Slider["1e"]["Size"] = UDim2.new(0, gsizex - 90, 0, 20);
+					Slider["1e"]["Text"] = options.name;
+					Slider["1e"]["Name"] = [[Name]];
+					Slider["1e"]["BackgroundTransparency"] = 1;
+					Slider["1e"]["Position"] = UDim2.new(0, 0, -1.0333333015441895, 0);
+					Slider["1e"]["ZIndex"] = 2;
+					
+					Slider["1t"] = Instance.new("UIPadding", Slider["1e"]);
+					Slider["1t"]["PaddingLeft"] = UDim.new(0, options.paddingval);
+				end
+				
+				--Methods
+				
+				do
+					function Slider:GetValue()
+						return tonumber(Slider["1d"].Text)
+					end
+
+					function Slider:SetValue(v)
+						if v == nil then
+							local percentage = math.clamp((mouse.X - Slider["1b"].AbsolutePosition.X) / (Slider["1b"].AbsoluteSize.X), 0, 1)
+							local value = math.floor(((options.max - options.min) * percentage ) + options.min)
+
+							Slider["1d"].Text = tostring(value)
+							Slider["1c"].Size = UDim2.fromScale(percentage, 1)
+						else
+							Slider["1d"].Text = tostring(v)
+							Slider["1c"].Size = UDim2.fromScale(((v - options.min) / (options.max - options.min)), 1)
+						end
+						options.callback(Slider:GetValue())
+					end
+				end
+				
+				--Logic
+				
+				do
+					Slider["1d"].MouseEnter:Connect(function()
+						Slider.Hover = true
+						Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(colorw)})
+						Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(lblue)})
+					end)
+
+					Slider["1d"].MouseLeave:Connect(function()
+						Slider.Hover = false
+						if not Slider.MouseDown then
+							Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(colorw2)})
+							Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(dblue)})
+						end
+					end)
+
+					uis.InputBegan:Connect(function(input, gpe)
+						if gpe then return end
+
+						if input.UserInputType == Enum.UserInputType.MouseButton1 and Slider.Hover then
+							Slider.MouseDown = true
+							Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(colorw2)})
+							Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(dblue)})
+							
+							if not Slider.Connection then
+								Slider.Connection = runser.RenderStepped:Connect(function()
+									Slider:SetValue()
+								end)
+							end
+						end
+					end)
+
+					uis.InputEnded:Connect(function(input, gpe)
+						if gpe then return end
+
+						if input.UserInputType == Enum.UserInputType.MouseButton1 then
+							Slider.MouseDown = false
+							if Slider.Hover then
+								Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(colorw)})
+								Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(lblue)})
+							else
+								Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(colorw2)})
+								Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(dblue)})
+							end
+							
+							if Slider.Connection then
+								Slider.Connection:Disconnect()
+							end
+							Slider.Connection = nil
+						end
+					end)
+				end
+				
+				return Slider
+			end
+			
+			return GroupBox
+		end
+		
+
+		return Tab
+	end
+	
+	return GUI
+end
