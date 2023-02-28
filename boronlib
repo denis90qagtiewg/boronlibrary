@@ -60,7 +60,7 @@ function Library:new(options)
 		GUI["2"]["BorderSizePixel"] = 2;
 		GUI["2"]["BackgroundColor3"] = Color3.fromRGB(50, 50, 50);
 		GUI["2"]["Size"] = UDim2.new(0, options.mainsizex, 0, options.mainsizey);
-		GUI["2"]["BorderColor3"] = Color3.fromRGB(dblue);
+		GUI["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 127);
 		GUI["2"]["Position"] = UDim2.fromOffset((viewport.X/2) - (GUI["2"].Size.X.Offset / 2), (viewport.Y/2) - (GUI["2"].Size.Y.Offset / 2));
 		GUI["2"]["Name"] = [[Main]];
 		GUI["2"]["Draggable"] = true
