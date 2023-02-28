@@ -14,16 +14,6 @@ local tweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection
 
 local Library = {}
 
-colorm = Color3.fromRGB(30,30,30)
-colorse = Color3.fromRGB(50,50,50)
-colorse2 = Color3.fromRGB(65, 65, 65)
-colorse3 = Color3.fromRGB(45, 45 ,45)
-colorse4 = Color3.fromRGB(55, 55, 55)
-dblue = Color3.fromRGB(0,0, 127)
-lblue = Color3.fromRGB(0, 85, 255)
-colorw = Color3.fromRGB(255, 255, 255)
-colorw2 = Color3.fromRGB(200, 200, 200)
-
 function Library:validate(defaults, options)
 	local options = options or {}
 		for i, v in pairs(defaults) do
@@ -64,15 +54,19 @@ function Library:new(options)
 		GUI["2"]["Position"] = UDim2.fromOffset((viewport.X/2) - (GUI["2"].Size.X.Offset / 2), (viewport.Y/2) - (GUI["2"].Size.Y.Offset / 2));
 		GUI["2"]["Name"] = [[Main]];
 		GUI["2"]["Draggable"] = true
+		GUI["2"]["Active"] = true
+		GUI["2"]["Selectable"] = true
 		
 		GUI["6"] = Instance.new("Frame", GUI["2"]);
 		GUI["6"]["BorderSizePixel"] = 2;
 		GUI["6"]["BackgroundColor3"] = Color3.fromRGB(30, 30, 30);
 		GUI["6"]["Size"] = UDim2.new(0, options.mainsizex - 20, 0, options.mainsizey - 35);
-		GUI["6"]["BorderColor3"] = Color3.fromRGB(colorse2);
+		GUI["6"]["BorderColor3"] = Color3.fromRGB(65, 65, 65);
 		GUI["6"]["Position"] = UDim2.new(0.025, 0, 0.063, 0)
 		GUI["6"]["Name"] = [[Inner]];
 		GUI["6"]["Draggable"] = true
+		GUI["6"]["Active"] = true
+		GUI["6"]["Selectable"] = true
 		
 		GUI["7"] = Instance.new("Frame", GUI["6"]);
 		GUI["7"]["BorderSizePixel"] = 2;
@@ -82,6 +76,8 @@ function Library:new(options)
 		GUI["7"]["Position"] = UDim2.new(0.02631578966975212, 0, -0.06849315017461777, 35);
 		GUI["7"]["Name"] = [[MainInner]];
 		GUI["7"]["Draggable"] = true
+		GUI["7"]["Active"] = true
+		GUI["7"]["Selectable"] = true
 	end
 	
 	do --Text
@@ -140,7 +136,7 @@ function Library:new(options)
 			Tab["a"]["TextWrapped"] = true;
 			Tab["a"]["BorderSizePixel"] = 0;
 			Tab["a"]["TextScaled"] = true;
-			Tab["a"]["BackgroundColor3"] = Color3.fromRGB(colorm);
+			Tab["a"]["BackgroundColor3"] = Color3.fromRGB(30, 30, 30);
 			Tab["a"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
 			Tab["a"]["TextSize"] = 18;
 			Tab["a"]["TextColor3"] = Color3.fromRGB(200, 200, 200);
@@ -289,7 +285,7 @@ function Library:new(options)
 					Button["15"] = Instance.new("TextLabel", Button["14"]);
 					Button["15"]["TextWrapped"] = true;
 					Button["15"]["TextScaled"] = true;
-					Button["15"]["BackgroundColor3"] = Color3.fromRGB(colorm);
+					Button["15"]["BackgroundColor3"] = Color3.fromRGB(30, 30, 30);
 					Button["15"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
 					Button["15"]["TextSize"] = 25;
 					Button["15"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
@@ -321,7 +317,7 @@ function Library:new(options)
 
 						if input.UserInputType == Enum.UserInputType.MouseButton1 and Button.Hover then
 							Button.MouseDown = true
-							Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(colorm)})
+							Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
 							options.callback()
 						end
 					end)
@@ -422,7 +418,7 @@ function Library:new(options)
 				do
 					Slider["1b"] = Instance.new("Frame", GroupBox["13"]);
 					Slider["1b"]["BorderSizePixel"] = 2;
-					Slider["1b"]["BackgroundColor3"] = Color3.fromRGB(colorm);
+					Slider["1b"]["BackgroundColor3"] = Color3.fromRGB(30, 30, 30);
 					Slider["1b"]["Size"] = UDim2.new(0, gsizex - 20, 0, 20);
 					Slider["1b"]["BorderColor3"] = Color3.fromRGB(55, 55, 55);
 					Slider["1b"]["Position"] = UDim2.new(0, options.posx, 0, options.posy);
@@ -440,7 +436,7 @@ function Library:new(options)
 					Slider["1d"] = Instance.new("TextLabel", Slider["1c"]);
 					Slider["1d"]["TextWrapped"] = true;
 					Slider["1d"]["TextScaled"] = true;
-					Slider["1d"]["BackgroundColor3"] = Color3.fromRGB(dblue);
+					Slider["1d"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 127);
 					Slider["1d"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
 					Slider["1d"]["TextSize"] = 14;
 					Slider["1d"]["TextColor3"] = Color3.fromRGB(200, 200, 200);
