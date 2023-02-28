@@ -431,7 +431,7 @@ function Library:new(options)
 
 					Slider["1c"] = Instance.new("Frame", Slider["1b"]);
 					Slider["1c"]["BorderSizePixel"] = 0;
-					Slider["1c"]["BackgroundColor3"] = Color3.fromRGB(dblue);
+					Slider["1c"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 127);
 					Slider["1c"]["Size"] = UDim2.new(0, gsizex - 95, 0, 20);
 					Slider["1c"]["BorderColor3"] = Color3.fromRGB(55, 55, 55);
 					Slider["1c"]["Name"] = [[Draggable]];
