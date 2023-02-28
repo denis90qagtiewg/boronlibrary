@@ -58,7 +58,7 @@ function Library:new(options)
 		
 		GUI["2"] = Instance.new("Frame", GUI["1"]);
 		GUI["2"]["BorderSizePixel"] = 2;
-		GUI["2"]["BackgroundColor3"] = Color3.fromRGB(colorse);
+		GUI["2"]["BackgroundColor3"] = Color3.fromRGB(50, 50, 50);
 		GUI["2"]["Size"] = UDim2.new(0, options.mainsizex, 0, options.mainsizey);
 		GUI["2"]["BorderColor3"] = Color3.fromRGB(dblue);
 		GUI["2"]["Position"] = UDim2.fromOffset((viewport.X/2) - (GUI["2"].Size.X.Offset / 2), (viewport.Y/2) - (GUI["2"].Size.Y.Offset / 2));
@@ -67,7 +67,7 @@ function Library:new(options)
 		
 		GUI["6"] = Instance.new("Frame", GUI["2"]);
 		GUI["6"]["BorderSizePixel"] = 2;
-		GUI["6"]["BackgroundColor3"] = Color3.fromRGB(colorm);
+		GUI["6"]["BackgroundColor3"] = Color3.fromRGB(30, 30, 30);
 		GUI["6"]["Size"] = UDim2.new(0, options.mainsizex - 20, 0, options.mainsizey - 35);
 		GUI["6"]["BorderColor3"] = Color3.fromRGB(colorse2);
 		GUI["6"]["Position"] = UDim2.new(0.025, 0, 0.063, 0)
@@ -76,7 +76,7 @@ function Library:new(options)
 		
 		GUI["7"] = Instance.new("Frame", GUI["6"]);
 		GUI["7"]["BorderSizePixel"] = 2;
-		GUI["7"]["BackgroundColor3"] = Color3.fromRGB(colorse);
+		GUI["7"]["BackgroundColor3"] = Color3.fromRGB(50, 50, 50);
 		GUI["7"]["Size"] = UDim2.new(0, options.mainsizex - 40, 0, options.mainsizey - 55);
 		GUI["7"]["BorderColor3"] = Color3.fromRGB(65, 65, 65);
 		GUI["7"]["Position"] = UDim2.new(0.02631578966975212, 0, -0.06849315017461777, 35);
@@ -91,7 +91,7 @@ function Library:new(options)
 		GUI["3"]["TextXAlignment"] = Enum.TextXAlignment.Left;
 		GUI["3"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
 		GUI["3"]["TextSize"] = 20;
-		GUI["3"]["TextColor3"] = Color3.fromRGB(colorw);
+		GUI["3"]["TextColor3"] = Color3.fromRGB(255, 255 ,255);
 		GUI["3"]["Size"] = UDim2.new(0, 400, 0, 20);
 		GUI["3"]["Text"] = options["name"];
 		GUI["3"]["Name"] = [[Text]];
@@ -105,7 +105,7 @@ function Library:new(options)
 	do --Navigation
 		GUI["8"] = Instance.new("Frame", GUI["7"]);
 		GUI["8"]["BorderSizePixel"] = 0;
-		GUI["8"]["BackgroundColor3"] = Color3.fromRGB(colorse);
+		GUI["8"]["BackgroundColor3"] = Color3.fromRGB(50, 50, 50);
 		GUI["8"]["BackgroundTransparency"] = 1;
 		GUI["8"]["Size"] = UDim2.new(0, options.mainsizex - 40, 0, 25);
 		GUI["8"]["Name"] = [[Navigation]];
@@ -131,9 +131,9 @@ function Library:new(options)
 		do
 			Tab["9"] = Instance.new("Frame", GUI["8"]);
 			Tab["9"]["BorderSizePixel"] = 2;
-			Tab["9"]["BackgroundColor3"] = Color3.fromRGB(colorm);
+			Tab["9"]["BackgroundColor3"] = Color3.fromRGB(30, 30, 30);
 			Tab["9"]["Size"] = UDim2.new(0, 75, 0, 25);
-			Tab["9"]["BorderColor3"] = Color3.fromRGB(colorse2);
+			Tab["9"]["BorderColor3"] = Color3.fromRGB(65, 65, 65);
 			Tab["9"]["Name"] = options.name.."TabButton";
 
 			Tab["a"] = Instance.new("TextLabel", Tab["9"]);
@@ -151,7 +151,7 @@ function Library:new(options)
 
 			Tab["12"] = Instance.new("Frame", GUI["7"]);
 			Tab["12"]["BorderSizePixel"] = 0;
-			Tab["12"]["BackgroundColor3"] = Color3.fromRGB(colorse3);
+			Tab["12"]["BackgroundColor3"] = Color3.fromRGB(45, 45 ,45);
 			Tab["12"]["Size"] = UDim2.new(0, 357, 0, 315);
 			Tab["12"]["BorderColor3"] = Color3.fromRGB(65, 65, 65)
 			Tab["12"]["Position"] = UDim2.new(0.0055555556900799274, 0, -0.03776855394244194, 35);
@@ -166,8 +166,8 @@ function Library:new(options)
 				end
 				
 				Tab.Active = true
-				Library:tween(Tab["a"], {TextColor3 = Color3.fromRGB(colorw)})
-				Library:tween(Tab["a"], {BackgroundColor3 = Color3.fromRGB(colorse3)})
+				Library:tween(Tab["a"], {TextColor3 = Color3.fromRGB(255, 255, 255)})
+				Library:tween(Tab["a"], {BackgroundColor3 = Color3.fromRGB(45, 45, 45)})
 				Tab["12"].Visible = true
 				
 				GUI.CurrentTab = Tab
@@ -179,8 +179,8 @@ function Library:new(options)
 				Tab.Active = false
 				Tab.Hover = false
 				
-				Library:tween(Tab["a"], {TextColor3 = Color3.fromRGB(colorw2)})
-				Library:tween(Tab["a"], {BackgroundColor3 = Color3.fromRGB(colorm)})
+				Library:tween(Tab["a"], {TextColor3 = Color3.fromRGB(200, 200, 200)})
+				Library:tween(Tab["a"], {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
 				Tab["12"].Visible = false
 				 
 			end
@@ -192,7 +192,7 @@ function Library:new(options)
 				Tab.Hover = true
 
 				if not Tab.Active then
-					Library:tween(Tab["a"], {TextColor3 = Color3.fromRGB(colorw)})
+					Library:tween(Tab["a"], {TextColor3 = Color3.fromRGB(255, 255, 255)})
 				end
 			end)
 
@@ -200,7 +200,7 @@ function Library:new(options)
 				Tab.Hover = false
 
 				if not Tab.Active then
-					Library:tween(Tab["a"], {TextColor3 = Color3.fromRGB(colorw2)})
+					Library:tween(Tab["a"], {TextColor3 = Color3.fromRGB(200, 200, 200)})
 				end
 			end)
 
@@ -235,9 +235,9 @@ function Library:new(options)
 			do
 				GroupBox["13"] = Instance.new("ScrollingFrame", Tab["12"]);
 				GroupBox["13"]["BorderSizePixel"] = 2;
-				GroupBox["13"]["BackgroundColor3"] = Color3.fromRGB(colorm);
+				GroupBox["13"]["BackgroundColor3"] = Color3.fromRGB(30, 30, 30);
 				GroupBox["13"]["Size"] = UDim2.new(0, options.sizex, 0, options.sizey);
-				GroupBox["13"]["BorderColor3"] = Color3.fromRGB(colorse2);
+				GroupBox["13"]["BorderColor3"] = Color3.fromRGB(65, 65 ,65);
 				GroupBox["13"]["Position"] = UDim2.new(0, options.posx, 0, options.posy);
 				GroupBox["13"]["Name"] = options.name.."Groupbox";
 				GroupBox["13"]["ZIndex"] = 2;
@@ -249,7 +249,7 @@ function Library:new(options)
 				GroupBox["20"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
 				GroupBox["20"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
 				GroupBox["20"]["TextSize"] = 14;
-				GroupBox["20"]["TextColor3"] = Color3.fromRGB(colorw);
+				GroupBox["20"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
 				GroupBox["20"]["Size"] = UDim2.new(0, options.sizex - 20, 0, 25);
 				GroupBox["20"]["Text"] = options.name;
 				GroupBox["20"]["Name"] = [[Name]];
@@ -279,9 +279,9 @@ function Library:new(options)
 				do
 					Button["14"] = Instance.new("Frame", GroupBox["13"]);
 					Button["14"]["BorderSizePixel"] = 2;
-					Button["14"]["BackgroundColor3"] = Color3.fromRGB(colorm);
+					Button["14"]["BackgroundColor3"] = Color3.fromRGB(30, 30, 30);
 					Button["14"]["Size"] = UDim2.new(0, gsizex - 20, 0, 25);
-					Button["14"]["BorderColor3"] = Color3.fromRGB(colorse2);
+					Button["14"]["BorderColor3"] = Color3.fromRGB(65, 65, 65);
 					Button["14"]["Position"] = UDim2.new(0, options.posx, 0, options.posy);
 					Button["14"]["Name"] = [[Button]];
 					Button["14"]["ZIndex"] = 2
@@ -292,9 +292,9 @@ function Library:new(options)
 					Button["15"]["BackgroundColor3"] = Color3.fromRGB(colorm);
 					Button["15"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
 					Button["15"]["TextSize"] = 25;
-					Button["15"]["TextColor3"] = Color3.fromRGB(colorw);
+					Button["15"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
 					Button["15"]["Size"] = UDim2.new(0, gsizex - 20, 0, 25);
-					Button["15"]["BorderColor3"] = Color3.fromRGB(colorse2);
+					Button["15"]["BorderColor3"] = Color3.fromRGB(65, 65 ,65);
 					Button["15"]["BorderSizePixel"] = 0
 					Button["15"]["Text"] = options.name;
 					Button["15"]["Name"] = [[Text]];
@@ -306,13 +306,13 @@ function Library:new(options)
 				do
 					Button["15"].MouseEnter:Connect(function()
 						Button.Hover = true
-						Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(colorse3)})
+						Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(45, 45, 45)})
 					end)
 
 					Button["15"].MouseLeave:Connect(function()
 						Button.Hover = false
 						if not Button.MouseDown then
-							Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(colorm)})
+							Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
 						end
 					end)
 
@@ -332,9 +332,9 @@ function Library:new(options)
 						if input.UserInputType == Enum.UserInputType.MouseButton1 then
 							Button.MouseDown = false
 							if Button.Hover then
-								Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(colorse3)})
+								Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(45, 45, 45)})
 							else
-								Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(colorm)})
+								Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
 							end
 						end
 					end)
@@ -368,11 +368,11 @@ function Library:new(options)
 					Label["22"] = Instance.new("TextLabel", GroupBox["13"]);
 					Label["22"]["TextWrapped"] = true;
 					Label["22"]["TextScaled"] = true;
-					Label["22"]["BackgroundColor3"] = Color3.fromRGB(colorw);
+					Label["22"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
 					Label["22"]["TextXAlignment"] = Enum.TextXAlignment.Left;
 					Label["22"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
 					Label["22"]["TextSize"] = 14;
-					Label["22"]["TextColor3"] = Color3.fromRGB(colorw);
+					Label["22"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
 					Label["22"]["Size"] = UDim2.new(0, gsizex - 20, 0, 20);
 					Label["22"]["Text"] = options.text;
 					Label["22"]["Name"] = [[Label]];
@@ -424,7 +424,7 @@ function Library:new(options)
 					Slider["1b"]["BorderSizePixel"] = 2;
 					Slider["1b"]["BackgroundColor3"] = Color3.fromRGB(colorm);
 					Slider["1b"]["Size"] = UDim2.new(0, gsizex - 20, 0, 20);
-					Slider["1b"]["BorderColor3"] = Color3.fromRGB(colorse4);
+					Slider["1b"]["BorderColor3"] = Color3.fromRGB(55, 55, 55);
 					Slider["1b"]["Position"] = UDim2.new(0, options.posx, 0, options.posy);
 					Slider["1b"]["Name"] = [[Slider]];
 					Slider["1b"]["ZIndex"] = 2;
@@ -433,7 +433,7 @@ function Library:new(options)
 					Slider["1c"]["BorderSizePixel"] = 0;
 					Slider["1c"]["BackgroundColor3"] = Color3.fromRGB(dblue);
 					Slider["1c"]["Size"] = UDim2.new(0, gsizex - 95, 0, 20);
-					Slider["1c"]["BorderColor3"] = Color3.fromRGB(colorse4);
+					Slider["1c"]["BorderColor3"] = Color3.fromRGB(55, 55, 55);
 					Slider["1c"]["Name"] = [[Draggable]];
 					Slider["1c"]["ZIndex"] = 2;
 
@@ -443,7 +443,7 @@ function Library:new(options)
 					Slider["1d"]["BackgroundColor3"] = Color3.fromRGB(dblue);
 					Slider["1d"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
 					Slider["1d"]["TextSize"] = 14;
-					Slider["1d"]["TextColor3"] = Color3.fromRGB(colorw2);
+					Slider["1d"]["TextColor3"] = Color3.fromRGB(200, 200, 200);
 					Slider["1d"]["Size"] = UDim2.new(0, gsizex - 20, 0, 20);
 					Slider["1d"]["Text"] = tostring(options.default);
 					Slider["1d"]["Name"] = [[Text]];
@@ -453,10 +453,10 @@ function Library:new(options)
 					Slider["1e"] = Instance.new("TextLabel", Slider["1b"]);
 					Slider["1e"]["TextWrapped"] = true;
 					Slider["1e"]["TextScaled"] = true;
-					Slider["1e"]["BackgroundColor3"] = Color3.fromRGB(colorw);
+					Slider["1e"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
 					Slider["1e"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
 					Slider["1e"]["TextSize"] = 14;
-					Slider["1e"]["TextColor3"] = Color3.fromRGB(colorw);
+					Slider["1e"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
 					Slider["1e"]["Size"] = UDim2.new(0, gsizex - 90, 0, 20);
 					Slider["1e"]["Text"] = options.name;
 					Slider["1e"]["Name"] = [[Name]];
@@ -495,15 +495,15 @@ function Library:new(options)
 				do
 					Slider["1d"].MouseEnter:Connect(function()
 						Slider.Hover = true
-						Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(colorw)})
-						Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(lblue)})
+						Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(255, 255, 255)})
+						Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(0, 85, 255)})
 					end)
 
 					Slider["1d"].MouseLeave:Connect(function()
 						Slider.Hover = false
 						if not Slider.MouseDown then
-							Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(colorw2)})
-							Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(dblue)})
+							Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(200, 200, 200)})
+							Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(0, 0, 127)})
 						end
 					end)
 
@@ -512,8 +512,8 @@ function Library:new(options)
 
 						if input.UserInputType == Enum.UserInputType.MouseButton1 and Slider.Hover then
 							Slider.MouseDown = true
-							Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(colorw2)})
-							Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(dblue)})
+							Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(200, 200, 200)})
+							Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(0, 0, 127)})
 							
 							if not Slider.Connection then
 								Slider.Connection = runser.RenderStepped:Connect(function()
@@ -529,11 +529,11 @@ function Library:new(options)
 						if input.UserInputType == Enum.UserInputType.MouseButton1 then
 							Slider.MouseDown = false
 							if Slider.Hover then
-								Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(colorw)})
-								Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(lblue)})
+								Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(255, 255, 255)})
+								Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(0, 85, 255)})
 							else
-								Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(colorw2)})
-								Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(dblue)})
+								Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(200, 200, 200)})
+								Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(0, 0, 127)})
 							end
 							
 							if Slider.Connection then
