@@ -53,9 +53,6 @@ function Library:new(options)
 		GUI["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 127);
 		GUI["2"]["Position"] = UDim2.fromOffset((viewport.X/2) - (GUI["2"].Size.X.Offset / 2), (viewport.Y/2) - (GUI["2"].Size.Y.Offset / 2));
 		GUI["2"]["Name"] = [[Main]];
-		GUI["2"]["Draggable"] = true
-		GUI["2"]["Active"] = true
-		GUI["2"]["Selectable"] = true
 		
 		GUI["6"] = Instance.new("Frame", GUI["2"]);
 		GUI["6"]["BorderSizePixel"] = 2;
@@ -64,9 +61,6 @@ function Library:new(options)
 		GUI["6"]["BorderColor3"] = Color3.fromRGB(65, 65, 65);
 		GUI["6"]["Position"] = UDim2.new(0.025, 0, 0.063, 0)
 		GUI["6"]["Name"] = [[Inner]];
-		GUI["6"]["Draggable"] = true
-		GUI["6"]["Active"] = true
-		GUI["6"]["Selectable"] = true
 		
 		GUI["7"] = Instance.new("Frame", GUI["6"]);
 		GUI["7"]["BorderSizePixel"] = 2;
@@ -75,9 +69,6 @@ function Library:new(options)
 		GUI["7"]["BorderColor3"] = Color3.fromRGB(65, 65, 65);
 		GUI["7"]["Position"] = UDim2.new(0.02631578966975212, 0, -0.06849315017461777, 35);
 		GUI["7"]["Name"] = [[MainInner]];
-		GUI["7"]["Draggable"] = true
-		GUI["7"]["Active"] = true
-		GUI["7"]["Selectable"] = true
 	end
 	
 	do --Text
