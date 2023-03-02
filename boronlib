@@ -4,7 +4,6 @@ local tweenService = game:GetService("TweenService")
 local runser = game:GetService("RunService")
 local core = game:GetService("CoreGui")
 local uis = game:GetService("UserInputService")
-local drag = loadstring(game:HttpGet('https://raw.githubusercontent.com/denis90qagtiewg/drag-control/main/drag'))()
 
 --variables
 local lp = players.LocalPlayer
@@ -54,8 +53,6 @@ function Library:new(options)
 		GUI["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 127);
 		GUI["2"]["Position"] = UDim2.fromOffset((viewport.X/2) - (GUI["2"].Size.X.Offset / 2), (viewport.Y/2) - (GUI["2"].Size.Y.Offset / 2));
 		GUI["2"]["Name"] = [[Main]];
-		local framedrag = drag.new(GUI["2"])
-		framedrag:Enable()
 		
 		GUI["6"] = Instance.new("Frame", GUI["2"]);
 		GUI["6"]["BorderSizePixel"] = 2;
@@ -918,5 +915,64 @@ function Library:new(options)
 	return GUI
 end
 
-return Library
+local main = Library:new{
+	name = "Boron Hub";
+	mainsizex = "400";
+	mainsizey = "400";
+}
 
+local tab = main:CreateTab{
+	name = "Aimbot"
+}
+
+local tab1 = main:CreateTab{
+	name = "ESP"
+}
+
+local tab2 = main:CreateTab{
+	name = "Other"
+}
+
+local tab3 = main:CreateTab{
+	name = "Settings"
+}
+
+local groupbox = tab:GroupBox{
+	name = "Aimbot";
+	posx = "10";
+	sizex = "170";
+}
+
+local button = groupbox:Button{
+	name = "new butono";
+	callback = function() end
+}
+
+i = 0
+button:SetCallback(function()
+	button:SetText("Been clicked: "..i.." times.")
+	i += 1
+end)
+
+local label = groupbox:Label{
+	text = "working label"
+}
+
+groupbox:Slider{
+	min = "0";
+	max = "180";
+	default = "90";
+	text = "fov slider";
+}
+
+groupbox:Toggle{
+	text = "aimbot toggle";
+	state = true;
+
+}
+
+local dd = groupbox:Dropdown{
+
+}
+
+dd:Add("new opitition", 1)
