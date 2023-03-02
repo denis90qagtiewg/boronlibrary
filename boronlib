@@ -4,6 +4,7 @@ local tweenService = game:GetService("TweenService")
 local runser = game:GetService("RunService")
 local core = game:GetService("CoreGui")
 local uis = game:GetService("UserInputService")
+local drag = require(script.Parent)
 
 --variables
 local lp = players.LocalPlayer
@@ -53,6 +54,8 @@ function Library:new(options)
 		GUI["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 127);
 		GUI["2"]["Position"] = UDim2.fromOffset((viewport.X/2) - (GUI["2"].Size.X.Offset / 2), (viewport.Y/2) - (GUI["2"].Size.Y.Offset / 2));
 		GUI["2"]["Name"] = [[Main]];
+		local framedrag 	= drag.new(GUI["2"])
+		framedrag:Enable()
 		
 		GUI["6"] = Instance.new("Frame", GUI["2"]);
 		GUI["6"]["BorderSizePixel"] = 2;
@@ -115,6 +118,7 @@ function Library:new(options)
 		}
 		
 		--Render
+		
 		do
 			Tab["9"] = Instance.new("Frame", GUI["8"]);
 			Tab["9"]["BorderSizePixel"] = 2;
@@ -146,6 +150,7 @@ function Library:new(options)
 		end
 		
 		--Functions
+		
 		function Tab:Activate()
 			if Tab.Active == false then
 				if GUI.CurrentTab ~= nil then
@@ -174,6 +179,7 @@ function Library:new(options)
 		end
 		
 		--Handling
+		
 		do
 			Tab["9"].MouseEnter:Connect(function()
 				Tab.Hover = true
@@ -219,6 +225,7 @@ function Library:new(options)
 			} ,options or {})
 			
 			--Render
+			
 			do
 				GroupBox["13"] = Instance.new("ScrollingFrame", Tab["12"]);
 				GroupBox["13"]["BorderSizePixel"] = 2;
@@ -237,7 +244,7 @@ function Library:new(options)
 				GroupBox["20"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
 				GroupBox["20"]["TextSize"] = 14;
 				GroupBox["20"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-				GroupBox["20"]["Size"] = UDim2.new(0, options.sizex - 20, 0, 25);
+				GroupBox["20"]["Size"] = UDim2.new(0, options.sizex, 0, 25);
 				GroupBox["20"]["Text"] = options.name;
 				GroupBox["20"]["Name"] = [[Name]];
 				GroupBox["20"]["BackgroundTransparency"] = 1;
@@ -249,7 +256,7 @@ function Library:new(options)
 			
 			function GroupBox:Button(options)
 				options = Library:validate({
-					name = "New Button";
+					text = "New Button";
 					posx = "10";
 					posy = "25";
 					sizex = "150";
@@ -263,6 +270,7 @@ function Library:new(options)
 				}
 
 				--Render
+				
 				do
 					Button["14"] = Instance.new("Frame", GroupBox["13"]);
 					Button["14"]["BorderSizePixel"] = 2;
@@ -283,13 +291,14 @@ function Library:new(options)
 					Button["15"]["Size"] = UDim2.new(0, gsizex - 20, 0, 25);
 					Button["15"]["BorderColor3"] = Color3.fromRGB(65, 65 ,65);
 					Button["15"]["BorderSizePixel"] = 0
-					Button["15"]["Text"] = options.name;
+					Button["15"]["Text"] = options.text;
 					Button["15"]["Name"] = [[Text]];
 					Button["15"]["BackgroundTransparency"] = 0;
 					Button["15"]["ZIndex"] = 2
 				end
 
 				--Logic
+				
 				do
 					Button["15"].MouseEnter:Connect(function()
 						Button.Hover = true
@@ -328,6 +337,7 @@ function Library:new(options)
 				end
 
 				--Methods
+				
 				function Button:SetText(text)
 					Button["15"].Text = text
 				end
@@ -351,6 +361,7 @@ function Library:new(options)
 				
 				
 				--Render
+				
 				do
 					Label["22"] = Instance.new("TextLabel", GroupBox["13"]);
 					Label["22"]["TextWrapped"] = true;
@@ -364,11 +375,8 @@ function Library:new(options)
 					Label["22"]["Text"] = options.text;
 					Label["22"]["Name"] = [[Label]];
 					Label["22"]["BackgroundTransparency"] = 1;
-					Label["22"]["Position"] = UDim2.new(0,0, 0, options.posy);
+					Label["22"]["Position"] = UDim2.new(0,10, 0, options.posy);
 					Label["22"]["ZIndex"] = 2
-					
-					Label["22"] = Instance.new("UIPadding", Label["22"]);
-					Label["22"]["PaddingLeft"] = UDim.new(0, options.paddingval);
 				end
 				
 				--Methods
@@ -381,12 +389,11 @@ function Library:new(options)
 			
 			function GroupBox:Slider(options)
 				options = Library:validate({
-					name = "new sliduh";
+					text = "new sliduh";
 					posx = "10";
 					posy = "95";
 					sizex = "150";
 					sizey = "25";
-					paddingval = "-2";
 					
 					min = 0;
 					max = 100;
@@ -440,19 +447,17 @@ function Library:new(options)
 					Slider["1e"] = Instance.new("TextLabel", Slider["1b"]);
 					Slider["1e"]["TextWrapped"] = true;
 					Slider["1e"]["TextScaled"] = true;
+					Slider["1e"]["TextXAlignment"] = Enum.TextXAlignment.Left;
 					Slider["1e"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
 					Slider["1e"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
 					Slider["1e"]["TextSize"] = 14;
 					Slider["1e"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-					Slider["1e"]["Size"] = UDim2.new(0, gsizex - 90, 0, 20);
-					Slider["1e"]["Text"] = options.name;
+					Slider["1e"]["Size"] = UDim2.new(0, gsizex - 30, 0, 20);
+					Slider["1e"]["Text"] = options.text;
 					Slider["1e"]["Name"] = [[Name]];
 					Slider["1e"]["BackgroundTransparency"] = 1;
-					Slider["1e"]["Position"] = UDim2.new(0, 0, -1.0333333015441895, 0);
+					Slider["1e"]["Position"] = UDim2.new(0, 1, -1.0333333015441895, 0);
 					Slider["1e"]["ZIndex"] = 2;
-					
-					Slider["1t"] = Instance.new("UIPadding", Slider["1e"]);
-					Slider["1t"]["PaddingLeft"] = UDim.new(0, options.paddingval);
 				end
 				
 				--Methods
@@ -501,6 +506,7 @@ function Library:new(options)
 							Slider.MouseDown = true
 							Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(200, 200, 200)})
 							Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(0, 0, 127)})
+								
 							
 							if not Slider.Connection then
 								Slider.Connection = runser.RenderStepped:Connect(function()
@@ -531,7 +537,375 @@ function Library:new(options)
 					end)
 				end
 				
+				Slider:SetValue(options.default)
+				
 				return Slider
+			end
+			
+			function GroupBox:Toggle(options)
+				options = Library:validate({
+					text = "toggle";
+					posx = "10";
+					posy = "125";
+					sizex = "20";
+					sizey = "20";
+					
+					state = true;
+
+					Options = options;
+
+					callback = function() end
+				} ,options or {})
+				
+				local Toggle = {
+					Hover = false;
+					MouseDown = false;
+					State = options.state;
+				}
+				
+				--Render
+				
+				do
+					-- StarterGui.BoronLibrary.Main.Inner.MainInner.testTab.test1.Toggle
+					Toggle["18"] = Instance.new("Frame", GroupBox["13"]);
+					Toggle["18"]["BorderSizePixel"] = 2;
+					Toggle["18"]["BackgroundColor3"] = Color3.fromRGB(30, 30, 30);
+					Toggle["18"]["Size"] = UDim2.new(0, options.sizex, 0, options.sizey);
+					Toggle["18"]["BorderColor3"] = Color3.fromRGB(55, 55, 55);
+					Toggle["18"]["Position"] = UDim2.new(0, options.posx, 0, options.posy);
+					Toggle["18"]["Name"] = [[Toggle]];
+					Toggle["18"]["ZIndex"] = 2;
+
+					-- StarterGui.BoronLibrary.Main.Inner.MainInner.testTab.test1.Toggle.ToggleFrame
+					Toggle["ae"] = Instance.new("Frame", Toggle["18"]);
+					Toggle["ae"]["BorderSizePixel"] = 0;
+					Toggle["ae"]["Size"] = UDim2.new(0, 20, 0, 20);
+					Toggle["ae"]["BorderColor3"] = Color3.fromRGB(55, 55, 55);
+					Toggle["ae"]["Name"] = [[ToggleFrame]];
+					Toggle["ae"]["ZIndex"] = 2;
+					
+					if options.state == true then
+						Toggle["ae"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 127);
+					elseif options.state == false then
+						Toggle["ae"]["BackgroundColor3"] = Color3.fromRGB(30,30,30);
+					end
+
+					-- StarterGui.BoronLibrary.Main.Inner.MainInner.testTab.test1.Toggle.Name
+					Toggle["1a"] = Instance.new("TextLabel", Toggle["18"]);
+					Toggle["1a"]["TextWrapped"] = true;
+					Toggle["1a"]["BorderSizePixel"] = 0;
+					Toggle["1a"]["TextScaled"] = true;
+					Toggle["1a"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+					Toggle["1a"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+					Toggle["1a"]["FontFace"] = Font.new([[rbxasset://fonts/families/Nunito.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+					Toggle["1a"]["TextSize"] = 14;
+					Toggle["1a"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+					Toggle["1a"]["Size"] = UDim2.new(0, 120, 0, 20);
+					Toggle["1a"]["Text"] = options.text;
+					Toggle["1a"]["Name"] = [[Name]];
+					Toggle["1a"]["BackgroundTransparency"] = 1;
+					Toggle["1a"]["Position"] = UDim2.new(0, 30, 0, 0);
+					Toggle["1a"]["ZIndex"] = 2;
+				end
+				
+
+				--Methods
+
+				function Toggle:Toggle(b)
+					if b == nil then
+						options.state = not options.state
+					else
+						options.state = b
+					end
+					
+					if options.state then
+						Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(0, 0, 127)})
+					else
+						Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
+					end
+					
+					print(options.state)
+					
+					options.callback(options.state)
+				end
+				
+				--Logic
+				
+				do
+					Toggle["ae"].MouseEnter:Connect(function()
+						Toggle.Hover = true
+						if options.state == true then
+							Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(0, 85, 255)})
+						elseif options.state == false then
+							Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(45, 45, 45)})
+						end
+					end)
+
+					Toggle["ae"].MouseLeave:Connect(function()
+						Toggle.Hover = false
+						if not Toggle.MouseDown then
+							if options.state == true then
+								Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(0, 0, 127)})
+							elseif options.state == false then
+								Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
+							end
+						end
+					end)
+
+					uis.InputBegan:Connect(function(input, gpe)
+						if gpe then return end
+
+						if input.UserInputType == Enum.UserInputType.MouseButton1 and Toggle.Hover then
+							Toggle.MouseDown = true
+							Toggle:Toggle()
+							
+							options.callback(Toggle.State)
+						end
+					end)
+
+					uis.InputEnded:Connect(function(input, gpe)
+						if gpe then return end
+
+						if input.UserInputType == Enum.UserInputType.MouseButton1 then
+							Toggle.MouseDown = false
+							if Toggle.Hover then
+								if options.state == true then
+									Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
+								else
+									Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(0, 0, 127)})
+								end							
+							end
+						end
+					end)
+				end
+				
+				return Toggle
+			end
+			
+			function GroupBox:Dropdown(options)
+				options = Library:validate({
+					name = "new dropdown",
+					posy = "170";
+					callback = function(v) print(v) end,
+					items = {}
+				}, options or {})
+				
+				local Dropdown = {
+					Items = {
+						["id"] = { 
+							"value"
+						}
+					},
+					Open = false,
+					MouseDown = false,
+					Hover = false,
+					HoveringItem = false
+				}
+				
+				local osize = 40
+				
+				--Render
+				do 
+					-- StarterGui.BoronLibrary.Main.Inner.MainInner.testTab.test1.Dropdown
+					Dropdown["17"] = Instance.new("Frame", GroupBox["13"]);
+					Dropdown["17"]["BorderSizePixel"] = 2;
+					Dropdown["17"]["BackgroundColor3"] = Color3.fromRGB(30, 30, 30);
+					Dropdown["17"]["Size"] = UDim2.new(0, 150, 0, 20);
+					Dropdown["17"]["BorderColor3"] = Color3.fromRGB(55, 55, 55);
+					Dropdown["17"]["Position"] = UDim2.new(0, 10, 0, 170);
+					Dropdown["17"]["Name"] = [[Dropdown]];
+					Dropdown["17"]["ZIndex"] = 2;
+
+					-- StarterGui.BoronLibrary.Main.Inner.MainInner.testTab.test1.Dropdown.Name
+					Dropdown["18"] = Instance.new("TextLabel", Dropdown["17"]);
+					Dropdown["18"]["TextWrapped"] = true;
+					Dropdown["18"]["TextScaled"] = true;
+					Dropdown["18"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+					Dropdown["18"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+					Dropdown["18"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+					Dropdown["18"]["TextSize"] = 14;
+					Dropdown["18"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+					Dropdown["18"]["Size"] = UDim2.new(0, 150, 0, 20);
+					Dropdown["18"]["Text"] = options.name;
+					Dropdown["18"]["Name"] = [[Name]];
+					Dropdown["18"]["BackgroundTransparency"] = 1;
+					Dropdown["18"]["Position"] = UDim2.new(0, 0, -1.031977891921997, 0);
+					Dropdown["18"]["ZIndex"] = 2;
+
+					-- StarterGui.BoronLibrary.Main.Inner.MainInner.testTab.test1.Dropdown.Options
+					Dropdown["19"] = Instance.new("Frame", Dropdown["17"]);
+					Dropdown["19"]["BorderSizePixel"] = 2;
+					Dropdown["19"]["BackgroundColor3"] = Color3.fromRGB(30, 30, 30);
+					Dropdown["19"]["Size"] = UDim2.new(0, 150, 0, 12);
+					Dropdown["19"]["BorderColor3"] = Color3.fromRGB(45, 45, 45);
+					Dropdown["19"]["Position"] = UDim2.new(0, 0, 1, 0);
+					Dropdown["19"]["Visible"] = false;
+					Dropdown["19"]["Name"] = [[Options]];
+					Dropdown["19"]["ZIndex"] = 2;
+
+					-- StarterGui.BoronLibrary.Main.Inner.MainInner.testTab.test1.Dropdown.Options.Option
+
+					-- StarterGui.BoronLibrary.Main.Inner.MainInner.testTab.test1.Dropdown.Options.UIListLayout
+					Dropdown["1c"] = Instance.new("UIListLayout", Dropdown["19"]);
+					Dropdown["1c"]["Padding"] = UDim.new(0, 1);
+					Dropdown["1c"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
+
+					-- StarterGui.BoronLibrary.Main.Inner.MainInner.testTab.test1.Dropdown.SelectedOption
+					Dropdown["1d"] = Instance.new("TextLabel", Dropdown["17"]);
+					Dropdown["1d"]["TextWrapped"] = true;
+					Dropdown["1d"]["BorderSizePixel"] = 0;
+					Dropdown["1d"]["TextScaled"] = true;
+					Dropdown["1d"]["BackgroundColor3"] = Color3.fromRGB(45, 45, 45);
+					Dropdown["1d"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+					Dropdown["1d"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+					Dropdown["1d"]["TextSize"] = 14;
+					Dropdown["1d"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+					Dropdown["1d"]["Size"] = UDim2.new(0, 150, 0, 20);
+					Dropdown["1d"]["Text"] = [[none]];
+					Dropdown["1d"]["Name"] = [[SelectedOption]];
+					Dropdown["1d"]["ZIndex"] = 2;
+				end
+				
+				--Methods
+				do	
+					function Dropdown:Toggle()
+						Dropdown.Open = not Dropdown.Open
+
+						if not Dropdown.Open then
+							Dropdown["19"].Size = UDim2.new(0, 150, 0, 40)
+							Dropdown["19"].Visible = false
+						else
+							local count = 0
+							for i, v in pairs(Dropdown.Items) do
+								if v ~= nil then
+									count += 1
+								end
+							end
+
+							Dropdown["19"].Visible = true
+							Dropdown["19"].Size = UDim2.new(0, 150, 0, 12 + (count * 19) + 1)
+						end
+					end
+					
+					function Dropdown:Remove(id)
+						if Dropdown.Items[id] ~= nil then
+							if Dropdown.Items[id].instance ~= nil then
+								for i, v in pairs(Dropdown.Items[id].instance) do
+									v:Destroy()
+								end
+							end
+							Dropdown.Items[id] = nil
+						end
+					end
+
+					function Dropdown:Clear()
+						for i, v in pairs(Dropdown.Items) do
+							Dropdown:Remove(i)
+						end
+					end
+					
+					function Dropdown:SetText(text)
+						Dropdown["1d"]["Text"] = text
+					end
+					
+					function Dropdown:Add(id, value)
+						local Item = {
+							Hover = false,
+							MouseDown = false
+						}
+
+						if Dropdown.Items[id] ~= nil then
+							return
+						end
+
+						Dropdown.Items[id] = {
+							instance = {},
+							value = value
+						}
+						-- StarterGui.MyLibrary.Main.ContentContainer.HomeTab.Dropdown.OptionHolder.Inactive Option
+						Dropdown.Items[id].instance["1a"] = Instance.new("TextLabel", Dropdown["19"]);
+						Dropdown.Items[id].instance["1a"]["TextWrapped"] = true;
+						Dropdown.Items[id].instance["1a"]["TextScaled"] = true;
+						Dropdown.Items[id].instance["1a"]["BackgroundColor3"] = Color3.fromRGB(30, 30, 30);
+						Dropdown.Items[id].instance["1a"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+						Dropdown.Items[id].instance["1a"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+						Dropdown.Items[id].instance["1a"]["TextSize"] = 14;
+						Dropdown.Items[id].instance["1a"]["TextColor3"] = Color3.fromRGB(200, 200, 200);
+						Dropdown.Items[id].instance["1a"]["Size"] = UDim2.new(0, 150, 0, 20);
+						Dropdown.Items[id].instance["1a"]["BorderColor3"] = Color3.fromRGB(65, 65, 65);
+						Dropdown.Items[id].instance["1a"]["Text"] = id;
+						Dropdown.Items[id].instance["1a"]["Name"] = [[Option]];
+						Dropdown.Items[id].instance["1a"]["Position"] = UDim2.new(0, 0, 0, 0, 0);
+						Dropdown.Items[id].instance["1a"]["ZIndex"] = 2;
+
+
+
+						Dropdown.Items[id].instance["1a"].MouseEnter:Connect(function()
+							Item.Hover = true
+							Dropdown.HoveringItem = true
+
+
+						end)
+
+						Dropdown.Items[id].instance["1a"].MouseLeave:Connect(function()
+							Item.Hover = false
+							Dropdown.HoveringItem = false
+
+							if not Item.MouseDown then
+
+							end
+						end)
+
+						uis.InputBegan:Connect(function(input, gpe)
+							if gpe then return end
+
+							if Dropdown.Items[id] == nil then return end
+
+							if input.UserInputType == Enum.UserInputType.MouseButton1 and Item.Hover then
+								Item.MouseDown = true
+								options.callback(value)
+								Dropdown:SetText(id)
+								Dropdown:Toggle()
+							end
+						end)
+					end
+				end
+				
+				--Logic
+
+				do
+					Dropdown["1d"].MouseEnter:Connect(function()
+						Dropdown.Hover = true
+					end)
+
+					Dropdown["1d"].MouseLeave:Connect(function()
+						Dropdown.Hover = false
+					end)
+
+					uis.InputBegan:Connect(function(input, gpe)
+						if gpe then return end
+
+						if input.UserInputType == Enum.UserInputType.MouseButton1 and Dropdown.Hover then
+							Dropdown.MouseDown = true
+							
+							Dropdown:Toggle()
+						end
+					end)
+
+					uis.InputEnded:Connect(function(input, gpe)
+						if gpe then return end
+
+						if input.UserInputType == Enum.UserInputType.MouseButton1 then
+							Dropdown.MouseDown = false
+							if Dropdown.Hover then
+											
+							end
+						end
+					end)
+				end
+				
+				return Dropdown
+				
 			end
 			
 			return GroupBox
@@ -545,3 +919,4 @@ function Library:new(options)
 end
 
 return Library
+
