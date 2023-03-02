@@ -54,7 +54,7 @@ function Library:new(options)
 		GUI["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 127);
 		GUI["2"]["Position"] = UDim2.fromOffset((viewport.X/2) - (GUI["2"].Size.X.Offset / 2), (viewport.Y/2) - (GUI["2"].Size.Y.Offset / 2));
 		GUI["2"]["Name"] = [[Main]];
-		local framedrag = drag.DraggableObject.new(GUI["2"])
+		local framedrag = drag.new(GUI["2"])
 		framedrag:Enable()
 		
 		GUI["6"] = Instance.new("Frame", GUI["2"]);
