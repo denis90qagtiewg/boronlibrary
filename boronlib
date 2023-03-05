@@ -44,6 +44,7 @@ function Library:init(options)
 	
 	local GUI = {
 		CurrentTab = nil;
+		State = true;
 	}
 	
 	do --Main Frame
@@ -111,6 +112,23 @@ function Library:init(options)
 	
 	function Library:Destroy()
 		GUI["1"]:Destroy()
+	end
+	
+	function GUI:Toggle()
+		uis.InputBegan:Connect(function(input, gpe)
+			if gpe then return end
+			
+			if input.KeyCode == Enum.KeyCode.RightShift then
+				if GUI.State == true then
+					GUI.State = false
+					GUI.Enabled = false
+				elseif GUI.State == false then
+					GUI.State = true
+					GUI.Enabled = true
+				end
+			end
+			
+		end)
 	end
 	
 	function GUI:CreateTab(options)
