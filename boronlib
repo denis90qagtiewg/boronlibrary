@@ -35,7 +35,7 @@ local maincolor = Color3.fromRGB(0,0,0)
 local toggle = nil
 local slider = nil
 
-function Library:new(options)	
+function Library:init(options)	
 	options = Library:validate({
 		name = "Boron Library";
 		mainsizex = "400";
@@ -107,6 +107,10 @@ function Library:new(options)
 		GUI["b"]["Padding"] = UDim.new(0, 20);
 		GUI["b"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
 
+	end
+	
+	function Library:Destroy()
+		GUI["1"]:Destroy()
 	end
 	
 	function GUI:CreateTab(options)
