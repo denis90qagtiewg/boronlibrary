@@ -510,8 +510,23 @@ function Library:init(options)
 							Slider["1d"].Text = tostring(NewValue)
 							Slider["1c"].Size = UDim2.fromScale(percentage, 1)
 						else
-							Slider["1d"].Text = tostring(v)
-							Slider["1c"].Size = UDim2.fromScale(((v - options.min) / (options.max - options.min)), 1)
+							local Current = Slider["1b"].AbsolutePosition.X + Slider["1b"].AbsoluteSize.X
+							local Start = Current
+							local Location = 0
+							Location = uis:GetMouseLocation().X
+							Current = Current + 0.025 * (Location - Start)
+
+							if Current <= Location and (Location - Start) < 0 then
+								Start = Location
+							elseif Current >= Location and (Location - Start) > 0 then
+								Start = Location
+							end
+							
+							local NewValue = options.min + (Location - Slider["1b"].AbsolutePosition.X) / Slider["1b"].AbsoluteSize.X * (options.max - options.min)
+							NewValue = math.floor(NewValue / options.increment + 0.5) * (options.increment * 10000000) / 10000000
+							
+							Slider["1d"].Text = tostring(NewValue)
+							Slider["1c"].Size = UDim2.fromScale(((NewValue - options.min) / (options.max - options.min)), 1)
 						end
 						options.callback(Slider:GetValue())
 					end
