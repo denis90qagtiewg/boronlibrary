@@ -556,8 +556,6 @@ function Library:init(options)
 					posy = "125";
 					sizex = "20";
 					sizey = "20";
-					
-					state = true;
 
 					Options = options;
 
@@ -567,7 +565,7 @@ function Library:init(options)
 				local Toggle = {
 					Hover = false;
 					MouseDown = false;
-					State = options.state;
+					State = false;
 				}
 				
 				--Render
@@ -593,9 +591,9 @@ function Library:init(options)
 					
 					toggle = Toggle["ae"]
 					
-					if options.state == true then
+					if Toggle.State == true then
 						Toggle["ae"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 127);
-					elseif options.state == false then
+					elseif Toggle.State == false then
 						Toggle["ae"]["BackgroundColor3"] = Color3.fromRGB(30,30,30);
 					end
 
@@ -622,20 +620,20 @@ function Library:init(options)
 
 				function Toggle:Toggle(b)
 					if b == nil then
-						options.state = not options.state
+						Toggle.State = not Toggle.State
 					else
-						options.state = b
+						Toggle.State = b
 					end
 					
-					if options.state then
+					if Toggle.State then
 						Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(0, 0, 127)})
 					else
 						Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
 					end
 					
-					print(options.state)
+					print(Toggle.State)
 					
-					options.callback(options.state)
+					options.callback(Toggle.State)
 				end
 				
 				--Logic
@@ -643,9 +641,9 @@ function Library:init(options)
 				do
 					Toggle["ae"].MouseEnter:Connect(function()
 						Toggle.Hover = true
-						if options.state == true then
+						if Toggle.State == true then
 							Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(0, 85, 255)})
-						elseif options.state == false then
+						elseif Toggle.State == false then
 							Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(45, 45, 45)})
 						end
 					end)
@@ -653,9 +651,9 @@ function Library:init(options)
 					Toggle["ae"].MouseLeave:Connect(function()
 						Toggle.Hover = false
 						if not Toggle.MouseDown then
-							if options.state == true then
+							if Toggle.State == true then
 								Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(0, 0, 127)})
-							elseif options.state == false then
+							elseif Toggle.State == false then
 								Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
 							end
 						end
@@ -678,7 +676,7 @@ function Library:init(options)
 						if input.UserInputType == Enum.UserInputType.MouseButton1 then
 							Toggle.MouseDown = false
 							if Toggle.Hover then
-								if options.state == true then
+								if Toggle.State == true then
 									Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
 								else
 									Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(0, 0, 127)})
