@@ -415,6 +415,7 @@ function Library:init(options)
 					min = 0;
 					max = 100;
 					default = 50;
+					increment = 1;
 					
 					Options = options;
 					
@@ -487,14 +488,14 @@ function Library:init(options)
 
 					function Slider:SetValue(v)
 						if v == nil then
-							local percentage = math.clamp((mouse.X - Slider["1b"].AbsolutePosition.X) / (Slider["1b"].AbsoluteSize.X), 0, 1)
+							local percentage = math.clamp((mouse.X - Slider["1b"].AbsolutePosition.X) / (Slider["1b"].AbsoluteSize.X), 0, options.increment)
 							local value = math.floor(((options.max - options.min) * percentage ) + options.min)
 
 							Slider["1d"].Text = tostring(value)
-							Slider["1c"].Size = UDim2.fromScale(percentage, 1)
+							Slider["1c"].Size = UDim2.fromScale(percentage, options.increment)
 						else
 							Slider["1d"].Text = tostring(v)
-							Slider["1c"].Size = UDim2.fromScale(((v - options.min) / (options.max - options.min)), 1)
+							Slider["1c"].Size = UDim2.fromScale(((v - options.min) / (options.max - options.min)), options.increment)
 						end
 						options.callback(Slider:GetValue())
 					end
