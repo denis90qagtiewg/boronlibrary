@@ -119,8 +119,8 @@ function Library:init(options)
 			GUI.State = true
 			GUI["1"].Enabled = true
 		else
-			GUI.State = false
-			GUI["1"].Enabled = false
+			GUI.State = true
+			GUI["1"].Enabled = true
 		end
 	end
 	
@@ -415,6 +415,7 @@ function Library:init(options)
 					min = 0;
 					max = 100;
 					default = 50;
+					increment = 1;
 					
 					Options = options;
 					
@@ -484,13 +485,29 @@ function Library:init(options)
 					function Slider:GetValue()
 						return tonumber(Slider["1d"].Text)
 					end
-
+					
 					function Slider:SetValue(v)
 						if v == nil then
+							local Current = Slider["1b"].AbsolutePosition.X + Slider["1b"].AbsoluteSize.X
+							local Start = Current
+							local Location = 0
+							Location = uis:GetMouseLocation().X
+							Current = Current + 0.025 * (Location - Start)
+							
+							if Current <= Location and (Location - Start) < 0 then
+								Start = Location
+							elseif Current >= Location and (Location - Start) > 0 then
+								Start = Location
+							end
+
+							
+							local NewValue = options.min + (Location - Slider.Main.AbsolutePosition.X) / Slider.Main.AbsoluteSize.X * (options.max - options.min)
+							NewValue = math.floor(NewValue / options.Increment + 0.5) * (options.Increment * 10000000) / 10000000
+							
 							local percentage = math.clamp((mouse.X - Slider["1b"].AbsolutePosition.X) / (Slider["1b"].AbsoluteSize.X), 0, 1)
 							local value = math.floor(((options.max - options.min) * percentage ) + options.min)
 
-							Slider["1d"].Text = tostring(value)
+							Slider["1d"].Text = tostring(NewValue)
 							Slider["1c"].Size = UDim2.fromScale(percentage, 1)
 						else
 							Slider["1d"].Text = tostring(v)
@@ -1193,9 +1210,14 @@ function Library:init(options)
 	uis.InputBegan:Connect(function(input, gpe)
 		local db = false
 		if gpe then return end
+		if db == true then return end
 		
 		if input.KeyCode == Enum.KeyCode.RightShift then
 			GUI:Toggle()
+			wait()
+			db = true
+			wait(0.5)
+			db = false
 		end
 	end)
 	
