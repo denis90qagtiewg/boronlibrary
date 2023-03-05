@@ -119,8 +119,8 @@ function Library:init(options)
 			GUI.State = true
 			GUI["1"].Enabled = true
 		else
-			GUI.State = true
-			GUI["1"].Enabled = true
+			GUI.State = false
+			GUI["1"].Enabled = false
 		end
 	end
 	
@@ -1193,14 +1193,9 @@ function Library:init(options)
 	uis.InputBegan:Connect(function(input, gpe)
 		local db = false
 		if gpe then return end
-		if db == true then return end
 		
 		if input.KeyCode == Enum.KeyCode.RightShift then
 			GUI:Toggle()
-			wait()
-			db = true
-			wait(0.5)
-			db = false
 		end
 	end)
 	
