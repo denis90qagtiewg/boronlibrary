@@ -502,7 +502,7 @@ function Library:init(options)
 
 							
 							local NewValue = options.min + (Location - Slider["1b"].AbsolutePosition.X) / Slider["1b"].AbsoluteSize.X * (options.max - options.min)
-							NewValue = math.floor(NewValue / options.Increment + 0.5) * (options.Increment * 10000000) / 10000000
+							NewValue = math.floor(NewValue / options.increment + 0.5) * (options.increment * 10000000) / 10000000
 							
 							local percentage = math.clamp((mouse.X - Slider["1b"].AbsolutePosition.X) / (Slider["1b"].AbsoluteSize.X), 0, 1)
 							local value = math.floor(((options.max - options.min) * percentage ) + options.min)
