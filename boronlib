@@ -728,7 +728,7 @@ function Library:init(options)
 					Dropdown["17"]["BackgroundColor3"] = Color3.fromRGB(30, 30, 30);
 					Dropdown["17"]["Size"] = UDim2.new(0, 150, 0, 20);
 					Dropdown["17"]["BorderColor3"] = Color3.fromRGB(55, 55, 55);
-					Dropdown["17"]["Position"] = UDim2.new(0, 10, 0, 170);
+					Dropdown["17"]["Position"] = UDim2.new(0, 10, 0, options.posy);
 					Dropdown["17"]["Name"] = [[Dropdown]];
 					Dropdown["17"]["ZIndex"] = 2;
 
