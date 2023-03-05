@@ -115,20 +115,13 @@ function Library:init(options)
 	end
 	
 	function GUI:Toggle()
-		uis.InputBegan:Connect(function(input, gpe)
-			if gpe then return end
-			
-			if input.KeyCode == Enum.KeyCode.RightShift then
-				if GUI.State == true then
-					GUI.State = false
-					GUI.Enabled = false
-				elseif GUI.State == false then
-					GUI.State = true
-					GUI.Enabled = true
-				end
-			end
-			
-		end)
+		if GUI.State == false then
+			GUI.State = true
+			GUI["1"].Enabled = true
+		else
+			GUI.State = true
+			GUI["1"].Enabled = true
+		end
 	end
 	
 	function GUI:CreateTab(options)
@@ -1077,7 +1070,7 @@ function Library:init(options)
 
 
 					local function updateColour(centreOfWheel)
-
+						if not GUI then return end
 
 						local colourPickerCentre = Vector2.new(
 							colourWheel.Picker.AbsolutePosition.X + (colourWheel.Picker.AbsoluteSize.X/2),
@@ -1196,6 +1189,19 @@ function Library:init(options)
 
 		return Tab
 	end
+	
+	uis.InputBegan:Connect(function(input, gpe)
+		local db = false
+		if gpe then return end
+		if db == true then return end
+		
+		if input.KeyCode == Enum.KeyCode.RightShift then
+			GUI:Toggle()
+			db = true
+			wait(0.5)
+			db = false
+		end
+	end)
 	
 	return GUI
 end
