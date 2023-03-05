@@ -415,7 +415,6 @@ function Library:init(options)
 					min = 0;
 					max = 100;
 					default = 50;
-					increment = 1;
 					
 					Options = options;
 					
@@ -492,10 +491,10 @@ function Library:init(options)
 							local value = math.floor(((options.max - options.min) * percentage ) + options.min)
 
 							Slider["1d"].Text = tostring(value)
-							Slider["1c"].Size = UDim2.fromScale(percentage, options.increment)
+							Slider["1c"].Size = UDim2.fromScale(percentage, 1)
 						else
 							Slider["1d"].Text = tostring(v)
-							Slider["1c"].Size = UDim2.fromScale(((v - options.min) / (options.max - options.min)), options.increment)
+							Slider["1c"].Size = UDim2.fromScale(((v - options.min) / (options.max - options.min)), 1)
 						end
 						options.callback(Slider:GetValue())
 					end
@@ -503,7 +502,7 @@ function Library:init(options)
 				
 				--Logic
 				
-				do
+				do*
 					Slider["1d"].MouseEnter:Connect(function()
 						Slider.Hover = true
 						Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(255, 255, 255)})
