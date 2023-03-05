@@ -501,7 +501,7 @@ function Library:init(options)
 							end
 
 							
-							local NewValue = options.min + (Location - Slider.Main.AbsolutePosition.X) / Slider.Main.AbsoluteSize.X * (options.max - options.min)
+							local NewValue = options.min + (Location - Slider["1b"].AbsolutePosition.X) / Slider["1b"].AbsoluteSize.X * (options.max - options.min)
 							NewValue = math.floor(NewValue / options.Increment + 0.5) * (options.Increment * 10000000) / 10000000
 							
 							local percentage = math.clamp((mouse.X - Slider["1b"].AbsolutePosition.X) / (Slider["1b"].AbsoluteSize.X), 0, 1)
@@ -1210,14 +1210,9 @@ function Library:init(options)
 	uis.InputBegan:Connect(function(input, gpe)
 		local db = false
 		if gpe then return end
-		if db == true then return end
 		
 		if input.KeyCode == Enum.KeyCode.RightShift then
 			GUI:Toggle()
-			wait()
-			db = true
-			wait(0.5)
-			db = false
 		end
 	end)
 	
