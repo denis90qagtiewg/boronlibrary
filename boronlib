@@ -617,23 +617,23 @@ function Library:init(options)
 				
 
 				--Methods
+				do
+					function Toggle:Toggle(b)
+						if b == nil then
+							Toggle.State = not Toggle.State
+						else
+							Toggle.State = b
+						end
 
-				function Toggle:Toggle(b)
-					if b == nil then
-						Toggle.State = not Toggle.State
-					else
-						Toggle.State = b
+						if Toggle.State then
+							Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(0, 0, 127)})
+						else
+							Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
+						end
+
+
+						options.callback(Toggle.State)
 					end
-					
-					if Toggle.State then
-						Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(0, 0, 127)})
-					else
-						Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
-					end
-					
-					print(Toggle.State)
-					
-					options.callback(Toggle.State)
 				end
 				
 				--Logic
@@ -665,8 +665,6 @@ function Library:init(options)
 						if input.UserInputType == Enum.UserInputType.MouseButton1 and Toggle.Hover then
 							Toggle.MouseDown = true
 							Toggle:Toggle()
-							
-							options.callback(Toggle.State)
 						end
 					end)
 
