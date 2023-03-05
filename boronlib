@@ -1197,6 +1197,7 @@ function Library:init(options)
 		
 		if input.KeyCode == Enum.KeyCode.RightShift then
 			GUI:Toggle()
+			wait()
 			db = true
 			wait(0.5)
 			db = false
