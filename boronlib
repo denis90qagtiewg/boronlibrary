@@ -502,7 +502,7 @@ function Library:init(options)
 				
 				--Logic
 				
-				do*
+				do
 					Slider["1d"].MouseEnter:Connect(function()
 						Slider.Hover = true
 						Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(255, 255, 255)})
