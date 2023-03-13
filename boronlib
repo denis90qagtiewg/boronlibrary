@@ -30,10 +30,12 @@ function Library:tween(object, goal, callback)
 	tween:Play()
 end
 
-local maincolor = Color3.fromRGB(0,0,0)
+local IsDragging = false 	
+local dragInput			
+local StartingPoint
+local oldPos	
 
-local toggle = nil
-local slider = nil
+local disableDrag = false
 
 function Library:init(options)	
 	options = Library:validate({
@@ -59,6 +61,42 @@ function Library:init(options)
 		GUI["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 127);
 		GUI["2"]["Position"] = UDim2.fromOffset((viewport.X/2) - (GUI["2"].Size.X.Offset / 2), (viewport.Y/2) - (GUI["2"].Size.Y.Offset / 2));
 		GUI["2"]["Name"] = [[Main]];
+		
+		local UIS = game:GetService("UserInputService")
+
+		local draggableFrame = GUI["2"]
+
+		local function update(input)
+			local delta = input.Position - StartingPoint
+			draggableFrame.Position = UDim2.new(oldPos.X.Scale, oldPos.X.Offset + delta.X, oldPos.Y.Scale, oldPos.Y.Offset + delta.Y)
+		end
+
+		draggableFrame.InputBegan:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 then
+				IsDragging = true
+				StartingPoint = input.Position
+				oldPos = draggableFrame.Position
+
+				input.Changed:Connect(function()
+					if input.UserInputState == Enum.UserInputState.End then
+						IsDragging = false
+					end
+				end)
+			end
+		end)
+
+		draggableFrame.InputChanged:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseMovement then
+				dragInput = input
+			end
+		end)
+
+		UIS.InputChanged:Connect(function(input)
+			if input == dragInput and IsDragging then
+				if disableDrag == true then return end
+				update(input)
+			end
+		end)
 		
 		GUI["6"] = Instance.new("Frame", GUI["2"]);
 		GUI["6"]["BorderSizePixel"] = 2;
@@ -221,6 +259,18 @@ function Library:init(options)
 				if input.UserInputType == Enum.UserInputType.MouseButton1 then
 					if Tab.Hover == true then
 						Tab:Activate()
+						disableDrag = true
+					end
+				end
+			end)
+			
+			uis.InputEnded:Connect(function(input, gpe)
+				if gpe then return end
+
+
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					if Tab.Hover == true then
+						disableDrag = false
 					end
 				end
 			end)
@@ -336,6 +386,7 @@ function Library:init(options)
 							Button.MouseDown = true
 							Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
 							options.callback()
+							disableDrag = true
 						end
 					end)
 
@@ -345,6 +396,7 @@ function Library:init(options)
 						if input.UserInputType == Enum.UserInputType.MouseButton1 then
 							Button.MouseDown = false
 							if Button.Hover then
+								disableDrag = false
 								Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(45, 45, 45)})
 							else
 								Library:tween(Button["15"], {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
@@ -419,7 +471,7 @@ function Library:init(options)
 					
 					Options = options;
 					
-					callback = function(v) print(v) end
+					callback = function(v) end
 				} ,options or {})
 				
 				local Slider = {
@@ -494,6 +546,18 @@ function Library:init(options)
 							Location = uis:GetMouseLocation().X
 							Current = Current + 0.025 * (Location - Start)
 							
+							if Location < Slider["1b"].AbsolutePosition.X then
+								Location = Slider["1b"].AbsolutePosition.X
+							elseif Location > Slider["1b"].AbsolutePosition.X + Slider["1b"].AbsoluteSize.X then
+								Location = Slider["1b"].AbsolutePosition.X + Slider["1b"].AbsoluteSize.X
+							end
+
+							if Current < Slider["1b"].AbsolutePosition.X + 5 then
+								Current = Slider["1b"].AbsolutePosition.X + 5
+							elseif Current > Slider["1b"].AbsolutePosition.X + Slider["1b"].AbsoluteSize.X then
+								Current = Slider["1b"].AbsolutePosition.X + Slider["1b"].AbsoluteSize.X
+							end
+
 							if Current <= Location and (Location - Start) < 0 then
 								Start = Location
 							elseif Current >= Location and (Location - Start) > 0 then
@@ -503,30 +567,13 @@ function Library:init(options)
 							
 							local NewValue = options.min + (Location - Slider["1b"].AbsolutePosition.X) / Slider["1b"].AbsoluteSize.X * (options.max - options.min)
 							NewValue = math.floor(NewValue / options.increment + 0.5) * (options.increment * 10000000) / 10000000
-							
 							local percentage = math.clamp((mouse.X - Slider["1b"].AbsolutePosition.X) / (Slider["1b"].AbsoluteSize.X), 0, 1)
-							local value = math.floor(((options.max - options.min) * percentage ) + options.min)
-
+							
 							Slider["1d"].Text = tostring(NewValue)
 							Slider["1c"].Size = UDim2.fromScale(percentage, 1)
 						else
-							local Current = Slider["1b"].AbsolutePosition.X + Slider["1b"].AbsoluteSize.X
-							local Start = Current
-							local Location = 0
-							Location = uis:GetMouseLocation().X
-							Current = Current + 0.025 * (Location - Start)
-
-							if Current <= Location and (Location - Start) < 0 then
-								Start = Location
-							elseif Current >= Location and (Location - Start) > 0 then
-								Start = Location
-							end
-							
-							local NewValue = options.min + (Location - Slider["1b"].AbsolutePosition.X) / Slider["1b"].AbsoluteSize.X * (options.max - options.min)
-							NewValue = math.floor(NewValue / options.increment + 0.5) * (options.increment * 10000000) / 10000000
-							
-							Slider["1d"].Text = tostring(NewValue)
-							Slider["1c"].Size = UDim2.fromScale(((NewValue - options.min) / (options.max - options.min)), 1)
+							Slider["1d"].Text = tostring(v)
+							Slider["1c"].Size = UDim2.fromScale(((v - options.min) / (options.max - options.min)), 1)
 						end
 						options.callback(Slider:GetValue())
 					end
@@ -556,7 +603,7 @@ function Library:init(options)
 							Slider.MouseDown = true
 							Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(200, 200, 200)})
 							Library:tween(Slider["1c"], {BackgroundColor3 = Color3.fromRGB(0, 0, 127)})
-								
+							disableDrag = true
 							
 							if not Slider.Connection then
 								Slider.Connection = runser.RenderStepped:Connect(function()
@@ -570,6 +617,7 @@ function Library:init(options)
 						if gpe then return end
 
 						if input.UserInputType == Enum.UserInputType.MouseButton1 then
+							disableDrag = false
 							Slider.MouseDown = false
 							if Slider.Hover then
 								Library:tween(Slider["1d"], {TextColor3 = Color3.fromRGB(255, 255, 255)})
@@ -587,7 +635,9 @@ function Library:init(options)
 					end)
 				end
 				
-				Slider:SetValue(options.default)
+				if options.default < options.max then
+					Slider:SetValue(options.default)
+				end
 				
 				return Slider
 			end
@@ -631,8 +681,6 @@ function Library:init(options)
 					Toggle["ae"]["BorderColor3"] = Color3.fromRGB(55, 55, 55);
 					Toggle["ae"]["Name"] = [[ToggleFrame]];
 					Toggle["ae"]["ZIndex"] = 2;
-					
-					toggle = Toggle["ae"]
 					
 					if Toggle.State == true then
 						Toggle["ae"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 127);
@@ -706,6 +754,7 @@ function Library:init(options)
 						if gpe then return end
 
 						if input.UserInputType == Enum.UserInputType.MouseButton1 and Toggle.Hover then
+							disableDrag = true
 							Toggle.MouseDown = true
 							Toggle:Toggle()
 						end
@@ -717,6 +766,7 @@ function Library:init(options)
 						if input.UserInputType == Enum.UserInputType.MouseButton1 then
 							Toggle.MouseDown = false
 							if Toggle.Hover then
+								disableDrag = false
 								if Toggle.State == true then
 									Library:tween(Toggle["ae"], {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
 								else
@@ -913,7 +963,18 @@ function Library:init(options)
 								Item.MouseDown = true
 								options.callback(value)
 								Dropdown:SetText(id)
+								disableDrag = true
 								Dropdown:Toggle()
+							end
+						end)
+						
+						uis.InputEnded:Connect(function(input, gpe)
+							if gpe then return end
+
+							if Dropdown.Items[id] == nil then return end
+
+							if input.UserInputType == Enum.UserInputType.MouseButton1 and Item.Hover then
+								disableDrag = false
 							end
 						end)
 					end
@@ -935,7 +996,7 @@ function Library:init(options)
 
 						if input.UserInputType == Enum.UserInputType.MouseButton1 and Dropdown.Hover then
 							Dropdown.MouseDown = true
-							
+							disableDrag = true
 							Dropdown:Toggle()
 						end
 					end)
@@ -946,7 +1007,7 @@ function Library:init(options)
 						if input.UserInputType == Enum.UserInputType.MouseButton1 then
 							Dropdown.MouseDown = false
 							if Dropdown.Hover then
-											
+								disableDrag = false
 							end
 						end
 					end)
@@ -1197,7 +1258,7 @@ function Library:init(options)
 
 						if input.UserInputType == Enum.UserInputType.MouseButton1 and ColorPicker.Hover then
 							ColorPicker.MouseDown = true
-
+							disableDrag = true
 							ColorPicker:Toggle()
 						end
 					end)
@@ -1208,7 +1269,7 @@ function Library:init(options)
 						if input.UserInputType == Enum.UserInputType.MouseButton1 then
 							ColorPicker.MouseDown = false
 							if ColorPicker.Hover then
-
+								disableDrag = false
 							end
 						end
 					end)
@@ -1232,5 +1293,4 @@ function Library:init(options)
 	
 	return GUI
 end
-
 return Library
